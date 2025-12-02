@@ -1,65 +1,125 @@
-/* style.css - Improved UI/UX */
+/* style.css - EventStack-inspired Modern Theme */
 
-/* --- 1. Global Setup and Variables (Easier Color Changes) --- */
+/* --- 1. Global Setup and Variables --- */
 :root {
-    --primary-color: #2980b9; /* Deep Sky Blue (Main Accent) */
-    --primary-hover-color: #1f6391;
-    --background-color: #f5f8fa; /* Light background for the body */
-    --text-color: #333;
-    --heading-color: #2c3e50; /* Dark Slate Grey */
-    --success-color: #27ae60; /* Emerald Green */
-    --error-color: #c0392b; /* Pomegranate Red */
-    --border-color: #ddd;
-    --card-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Smoother, larger shadow */
+    /* Core brand colors (inspired by EventStack) */
+    --primary-color: #2563eb;          /* Bright royal blue */
+    --primary-hover-color: #1d4ed8;    /* Deeper blue */
+    --accent-color: #14b8a6;           /* Teal accent */
+
+    /* Background & surfaces */
+    --background-color: #020617;       /* Deep slate/ink */
+    --background-gradient: radial-gradient(circle at top left, #0f172a 0, #020617 55%);
+    --surface-color: rgba(15, 23, 42, 0.92);
+    --surface-elevated: rgba(15, 23, 42, 0.98);
+
+    /* Text */
+    --text-color: #e5e7eb;             /* Light gray text */
+    --muted-text-color: #9ca3af;
+    --heading-color: #e5e7eb;
+
+    /* Card background (for legacy uses) */
+    --card-bg: #020617;
+
+    /* Borders / states */
+    --border-color: rgba(148, 163, 184, 0.45);
+    --success-color: #22c55e;
+    --error-color: #f97373;
+
+    /* Shadows */
+    --card-shadow: 0 22px 45px rgba(15, 23, 42, 0.8);
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--background-color);
+    background-image: var(--background-gradient);
+    background-attachment: fixed;
+    background-size: cover;
     margin: 0;
-    padding: 20px 0; /* Adjusted padding for better centering */
+    padding: 32px 0;
     display: flex;
     justify-content: center;
     min-height: 100vh;
+    color: var(--text-color);
+}
+
+/* Specific class for pages that need the single form centered */
+.centered-form-page {
+    align-items: center; 
+    padding: 0;
 }
 
 /* Central container for all main content */
 .main-content {
-    max-width: 900px;
+    max-width: 960px;
     width: 100%;
-    margin: 0 20px;
+    margin: 0 24px;
+    padding: 28px 28px 32px 28px;
+    border-radius: 24px;
+    background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.12), transparent 55%),
+                var(--surface-color);
+    box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.25), var(--card-shadow);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    position: relative;
+    overflow: visible; /* allow dropdowns like filter-panel to show fully */
+}
+
+/* For form pages, override main-content to allow the form to center */
+.centered-form-page .main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+    padding: 20px;
 }
 
 h2, h3 {
     color: var(--heading-color);
     margin-top: 20px;
     margin-bottom: 15px;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+    padding-bottom: 6px;
+    letter-spacing: 0.03em;
+}
+
+h2 {
+    font-size: 1.9rem;
+}
+
+h3 {
+    font-size: 1.4rem;
 }
 
 /* --- 2. Links and Navigation --- */
 a {
-    color: var(--primary-color);
+    color: var(--accent-color);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.25s ease, opacity 0.25s ease;
 }
 
 a:hover {
-    color: var(--primary-hover-color);
-    text-decoration: none;
+    color: var(--primary-color);
+    opacity: 0.9;
 }
 
 .header {
-    padding: 15px;
-    margin-bottom: 30px;
-    border-bottom: 3px solid var(--primary-color);
+    padding: 18px 26px;
+    margin-bottom: 32px;
+    border-bottom: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: white;
-    border-radius: 8px 8px 0 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background: linear-gradient(120deg, rgba(15, 23, 42, 0.9), rgba(30, 64, 175, 0.9));
+    border-radius: 18px;
+    box-shadow: 0 18px 35px rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(59, 130, 246, 0.45);
+    position: relative;
+    overflow: hidden;
 }
 
 .header h2 {
@@ -70,15 +130,21 @@ a:hover {
 
 nav a {
     margin-left: 15px;
-    font-weight: 600;
-    padding: 8px 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    color: #e5e7eb;
+    font-size: 0.9rem;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.1s ease;
 }
 
 nav a:hover {
-    background-color: #ecf0f1; /* Very light grey for hover background */
+    background-color: rgba(15, 23, 42, 0.9);
+    border-color: rgba(59, 130, 246, 0.8);
+    color: #e5e7eb;
     text-decoration: none;
+    transform: translateY(-1px);
 }
 
 .footer-link {
@@ -86,19 +152,38 @@ nav a:hover {
     display: block;
     text-align: center;
     padding: 10px;
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(148, 163, 184, 0.35);
     border-radius: 5px;
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    background: var(--surface-elevated);
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.7);
+    font-size: 0.95rem;
 }
 
-/* --- 3. Forms and Inputs --- */
+/* --- 3. Forms and Inputs (Card Style) --- */
 form {
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
+    background: linear-gradient(145deg, rgba(15,23,42,0.96), rgba(15,23,42,0.9));
+    padding: 30px 28px 26px 28px;
+    border-radius: 18px;
+    box-shadow: 0 22px 45px rgba(15, 23, 42, 0.9);
+    margin: 18px auto 30px auto; /* center all forms horizontally */
+    border: 1px solid rgba(59, 130, 246, 0.6);
+    max-width: 460px;
+    width: 100%;
+}
+
+.centered-form-page form {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 38px 30px 30px 30px;
     box-shadow: var(--card-shadow);
-    margin-bottom: 30px;
+}
+
+form label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--muted-text-color);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 form input[type="text"],
@@ -106,22 +191,27 @@ form input[type="password"],
 form input[type="number"],
 form input[type="file"],
 form input[type="date"],
+form input[type="email"],
 form select,
 form textarea {
-    padding: 10px 12px;
+    padding: 11px 12px;
     margin: 8px 0 16px 0;
     width: 100%;
     box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    background-color: rgba(15, 23, 42, 0.7);
+    color: var(--text-color);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, transform 0.1s ease;
 }
 
 form input:focus, form select:focus, form textarea:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 5px rgba(41, 128, 185, 0.5); /* Blue glow on focus */
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.55), 0 18px 35px rgba(15, 23, 42, 0.9);
+    background-color: rgba(15, 23, 42, 0.95);
     outline: none;
+    transform: translateY(-1px);
 }
 
 form textarea {
@@ -131,43 +221,237 @@ form textarea {
 
 form input[type="submit"],
 button {
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     border: none;
-    padding: 12px 25px;
-    color: white;
+    padding: 11px 22px;
+    color: #f9fafb;
     cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 999px;
+    font-size: 0.98rem;
     font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.1s ease;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: background 0.25s ease, transform 0.08s ease, box-shadow 0.25s ease;
+    width: 100%; 
+    margin-top: 10px;
 }
 
 form input[type="submit"]:hover,
 button:hover {
-    background-color: var(--primary-hover-color);
-    transform: translateY(-1px);
+    background: linear-gradient(135deg, var(--primary-hover-color), var(--accent-color));
+    transform: translateY(-1px); 
+    box-shadow: 0 16px 35px rgba(15, 23, 42, 1);
+}
+
+/* Container row for search + filter */
+.filters-row {
+    margin: 10px 0 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px; /* move filter button a bit to the right from search bar */
+}
+
+.search-form {
+    display: flex;
+    align-items: center;              /* keep input and buttons in one line */
+    gap: 6px;
+    padding: 6px 10px;
+    background: #3b3f46;              /* solid pill like browser bar */
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    box-shadow: none;
+}
+
+.search-form input[type="text"] {
+    min-width: 260px;
+    width: auto;                      /* override global width:100% */
+    padding: 6px 4px;
+    font-size: 0.95rem;
+    border-radius: 999px;
+    box-sizing: border-box;
+    display: inline-block;
+    border: none;
+    background: transparent;
+}
+
+.clear-btn {
+    background: transparent !important;
+    border: none !important;
+    color: var(--muted-text-color);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none !important;
+    transition: none !important;
+}
+
+.clear-btn:hover {
+    /* no hover effect for clear button */
+    background: transparent !important;
+    color: var(--muted-text-color);
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.search-divider {
+    width: 1px;
+    height: 22px;
+    background: rgba(148, 163, 184, 0.5);
 }
 
 .filter-form {
-    margin-bottom: 30px;
-    padding: 15px;
+    padding: 0;
     display: flex;
-    gap: 10px;
     align-items: center;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    justify-content: flex-end;
+    background: transparent;   /* remove outer box behind filter button */
+    box-shadow: none;
+    border: none;              /* override global form border (blue line) */
+    border-radius: 0;
+    outline: none;             /* remove default blue outline */
+}
+
+.filter-form:focus,
+.filter-form:focus-within {
+    outline: none;             /* keep outline removed when focused */
 }
 
 .filter-form select {
-    flex-grow: 1;
-    margin: 0; 
+    margin: 6px 0 8px 0;
+    min-width: 160px;
 }
 
-.filter-form input[type="submit"] {
-    margin: 0;
-    padding: 10px 15px;
-    white-space: nowrap;
+/* Filter dropdown with hover panel */
+.filter-dropdown {
+    position: relative;
+    margin-left: 0;
+}
+
+.filter-toggle {
+    background: var(--surface-elevated);
+    border-radius: 6px; /* less rounded */
+    border: none;       /* no outline */
+    padding: 7px 14px;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    outline: none;      /* remove blue focus ring */
+    box-shadow: none;   /* remove any outer glow */
+    transition: background-color 0.2s ease, transform 0.08s ease;
+}
+
+.filter-toggle:hover,
+.filter-dropdown:focus-within .filter-toggle {
+    background-color: rgba(15, 23, 42, 0.9);
+    transform: translateY(-1px);
+}
+
+.filter-panel {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background: var(--surface-elevated);
+    border-radius: 12px;
+    padding: 12px 14px 14px 14px;
+    box-shadow: 0 18px 35px rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    min-width: 240px;
+    opacity: 0;
+    transform: translateY(6px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 20;
+}
+
+.filter-panel label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted-text-color);
+}
+
+.filter-dropdown:hover .filter-panel,
+.filter-dropdown:focus-within .filter-panel {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.search-btn {
+    background: transparent !important;
+    border: none !important;
+    padding: 0;                        /* icon only */
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    color: transparent;                /* hide emoji/text */
+    box-shadow: none !important;
+    transition: none !important;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-btn:hover {
+    /* no hover effect for search button */
+    background: transparent !important;
+    color: transparent;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* custom magnifying-glass icon using CSS only */
+.search-btn::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;                                    /* perfect circle */
+    border: 2px solid rgba(148, 163, 184, 0.95);          /* medium gray, like your second image */
+    box-sizing: border-box;
+}
+
+.search-btn::after {
+    content: "";
+    width: 8px;
+    height: 2px;
+    background: rgba(148, 163, 184, 0.95);                /* same gray for handle */
+    border-radius: 999px;
+    position: absolute;
+    right: 2px;                                           /* pull handle closer to circle */
+    bottom: 4px;
+    transform: rotate(45deg);                             /* 45deg like system search icon */
+}
+
+.filter-apply-btn {
+    margin-top: 8px;
+    background: transparent;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    padding: 7px 16px;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.08s ease, box-shadow 0.2s ease;
+}
+
+.filter-apply-btn:hover {
+    background-color: rgba(15, 23, 42, 0.9);
+    border-color: rgba(59, 130, 246, 0.8);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.9);
+    transform: translateY(-1px);
 }
 
 /* --- 4. Messages --- */
@@ -181,14 +465,20 @@ button:hover {
 
 .error {
     color: var(--error-color);
-    background-color: #fceae9; 
+    background-color: #fcebeb; 
     border: 1px solid var(--error-color);
 }
 
 .success {
     color: var(--success-color);
-    background-color: #e6f7ee; 
+    background-color: #e8f9e8; 
     border: 1px solid var(--success-color);
+}
+
+/* Center helpers for specific layouts */
+.header-center {
+    justify-content: center;
+    text-align: center;
 }
 
 /* --- 5. Tables --- */
@@ -196,8 +486,9 @@ table {
     border-collapse: collapse;
     width: 100%;
     margin: 15px 0;
-    box-shadow: var(--card-shadow);
-    background: white;
+    box-shadow: 0 18px 35px rgba(15, 23, 42, 0.85);
+    background: var(--surface-elevated);
+    color: var(--text-color);
     border-radius: 8px;
     overflow: hidden;
 }
@@ -217,39 +508,59 @@ table th {
     font-size: 14px;
 }
 
-/* Stripe rows for readability */
 table tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: rgba(15, 23, 42, 0.96);
 }
 
 table tr:hover {
-    background-color: #f1f1f1;
+    background-color: rgba(30, 64, 175, 0.6);
 }
 
-/* --- 6. Event Cards (Student Dashboard) --- */
+/* --- 6. Event Cards (Student Dashboard) - Unique Look --- */
 .event-card {
     display: flex;
-    align-items: flex-start; /* Aligns content to the top of the card */
+    align-items: flex-start;
     border: 1px solid var(--border-color);
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     box-shadow: var(--card-shadow);
-    border-radius: 8px;
-    background: white;
+    border-radius: 10px;
+    background: var(--card-bg);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
+    border-left: 8px solid var(--primary-color); 
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ribbon for "EVENT" tag */
+.event-card:before {
+    content: "CELEBRATE!";
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--primary-color);
+    color: white;
+    padding: 5px 20px;
+    font-size: 10px;
+    font-weight: bold;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+    width: 80px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
 }
 
 .event-card:hover {
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    transform: translateY(-4px);
 }
 
 .event-card img {
-    width: 180px; 
-    min-width: 180px;
-    height: 120px;
+    width: 200px; 
+    min-width: 200px;
+    height: 140px;
     object-fit: cover;
-    margin-right: 20px;
+    margin-right: 25px;
     border-radius: 6px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -262,16 +573,19 @@ table tr:hover {
     margin-top: 0;
     border-bottom: none;
     padding-bottom: 0;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    color: var(--heading-color);
 }
 
 .event-details p {
     margin: 5px 0;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 .event-details strong {
     color: var(--heading-color);
+    display: inline-block;
+    min-width: 60px;
 }
 
 /* --- 7. Responsive Overrides (Mobile) --- */
@@ -307,7 +621,19 @@ table tr:hover {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        border-left: none; 
+        padding-top: 40px; 
     }
+    
+    .event-card:before {
+        top: 0px;
+        right: 0px;
+        transform: none;
+        width: 100%;
+        border-radius: 10px 10px 0 0;
+        padding: 10px 0;
+    }
+
     .event-card img {
         margin: 0 0 15px 0;
         width: 100%;
@@ -323,8 +649,17 @@ table tr:hover {
     .filter-form input[type="submit"] {
         width: 100%;
     }
+    
+    .centered-form-page .main-content {
+        padding: 10px;
+    }
 
-    /* Table Mobile View (Hides column headers and stacks rows) */
+    .centered-form-page form {
+        width: 95%;
+        padding: 30px;
+    }
+
+    /* Table Mobile View (Stacks rows) */
     table, thead, tbody, th, td, tr {
         display: block;
     }
@@ -339,7 +674,7 @@ table tr:hover {
         border: 1px solid var(--border-color);
         margin-bottom: 10px;
         border-radius: 5px;
-        background-color: white !important;
+        background-color: var(--card-bg) !important;
         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
@@ -350,11 +685,17 @@ table tr:hover {
         padding-left: 50%;
         text-align: right;
     }
-
-    /*
-      **IMPORTANT FOR TABLES:**
-      To display proper labels on mobile for tables, you need to update your PHP files
-      to include a `data-label` attribute on each `<td>` element.
-      Example: `<td data-label="Event Name"><?php echo htmlspecialchars($row['event_name']); ?></td>`
-    */
+    
+    /* Display the data-label as the pseudo-element 'header' */
+    table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%; 
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: var(--primary-color);
+    }
 }

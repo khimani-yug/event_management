@@ -7,15 +7,20 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    // Security: Use Prepared Statements
+    $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $sql = "INSERT INTO users (username,email, password, role) VALUES ('$username','$email', '$password', 'teacher')";
-    if (mysqli_query($conn, $sql)) {
+    $email = $_POST['email'];
+    
+    $stmt = mysqli_prepare($conn, "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, 'teacher')");
+    mysqli_stmt_bind_param($stmt, "sss", $username, $email, $password);
+    
+    if (mysqli_stmt_execute($stmt)) {
         $success = "Teacher created successfully.";
     } else {
         $error = "Error: " . mysqli_error($conn);
     }
+    mysqli_stmt_close($stmt);
 }
 ?>
 
@@ -23,17 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Create Teacher</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
 </head>
-<body>
+<body class="centered-form-page">
 <div class="main-content">
-<div class="header">
-    <h2>Create Teacher</h2>
-</div>
+<h2>Create Teacher</h2>
 <form method="post" action="">
-    Username: <input type="text" name="username" required><br><br>
-    Password: <input type="password" name="password" required><br><br>
-    Email : <input type="text" name="email" required><br><br>
+    <label for="username">Username:</label> <input type="text" id="username" name="username" required><br>
+    <label for="password">Password:</label> <input type="password" id="password" name="password" required><br>
+    <label for="email">Email:</label> <input type="email" id="email" name="email" required><br>
     <input type="submit" value="Create">
 </form>
 <?php if (isset($success)) echo "<p class='success'>$success</p>"; ?>

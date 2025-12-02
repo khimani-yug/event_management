@@ -10,11 +10,14 @@ if (isset($_SESSION['role'])) {
 include 'db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $username = $_POST['username']; 
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE username = '$username'";
-    $result = mysqli_query($conn, $sql);
+    // Security: Use Prepared Statements
+    $stmt = mysqli_prepare($conn, "SELECT id, username, password, role FROM users WHERE username = ?");
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
     if ($row = mysqli_fetch_assoc($result)) {
         if (password_verify($password, $row['password'])) {
@@ -36,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $error = "User not found.";
     }
+    mysqli_stmt_close($stmt);
 }
 ?>
 
@@ -43,17 +47,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Cache-busting query to ensure latest CSS is loaded -->
+    <link rel="stylesheet" href="style.css?v=2">
 </head>
-<body>
+<body class="centered-form-page">
 <div class="main-content">
-<div class="header">
     <h2>Login to Event Management System</h2>
-</div>
 
 <form method="post" action="">
-    Username: <input type="text" name="username" required><br>
-    Password: <input type="password" name="password" required><br>
+    <label for="username">Username:</label> <input type="text" id="username" name="username" required><br>
+    <label for="password">Password:</label> <input type="password" id="password" name="password" required><br>
     <input type="submit" value="Login">
 </form>
 

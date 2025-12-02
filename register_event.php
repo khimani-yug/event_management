@@ -9,18 +9,37 @@ include 'db.php';
 $student_id = $_SESSION['user_id'];
 $event_id = (int)$_GET['event_id'];
 
-// Check already registered
-$check = mysqli_query($conn, "SELECT * FROM registrations WHERE student_id = '$student_id' AND event_id = '$event_id'");
-if (mysqli_num_rows($check) == 0) {
-    // Check limit
-    $count = mysqli_query($conn, "SELECT COUNT(*) as cnt FROM registrations WHERE event_id = '$event_id'");
-    $countRow = mysqli_fetch_assoc($count);
+// Security: Using Prepared Statements for all database operations
 
-    $event = mysqli_query($conn, "SELECT participant_limit FROM events WHERE id = '$event_id'");
-    $eventRow = mysqli_fetch_assoc($event);
+// 1. Check already registered
+$stmt_check = mysqli_prepare($conn, "SELECT * FROM registrations WHERE student_id = ? AND event_id = ?");
+mysqli_stmt_bind_param($stmt_check, "ii", $student_id, $event_id);
+mysqli_stmt_execute($stmt_check);
+$check_result = mysqli_stmt_get_result($stmt_check);
+mysqli_stmt_close($stmt_check);
+
+if (mysqli_num_rows($check_result) == 0) {
+    // 2. Check limit
+    $stmt_count = mysqli_prepare($conn, "SELECT COUNT(*) as cnt FROM registrations WHERE event_id = ?");
+    mysqli_stmt_bind_param($stmt_count, "i", $event_id);
+    mysqli_stmt_execute($stmt_count);
+    $count_result = mysqli_stmt_get_result($stmt_count);
+    $countRow = mysqli_fetch_assoc($count_result);
+    mysqli_stmt_close($stmt_count);
+
+    $stmt_event = mysqli_prepare($conn, "SELECT participant_limit FROM events WHERE id = ?");
+    mysqli_stmt_bind_param($stmt_event, "i", $event_id);
+    mysqli_stmt_execute($stmt_event);
+    $event_result = mysqli_stmt_get_result($stmt_event);
+    $eventRow = mysqli_fetch_assoc($event_result);
+    mysqli_stmt_close($stmt_event);
 
     if ($countRow['cnt'] < $eventRow['participant_limit']) {
-        mysqli_query($conn, "INSERT INTO registrations (student_id, event_id) VALUES ('$student_id', '$event_id')");
+        // 3. Register student
+        $stmt_insert = mysqli_prepare($conn, "INSERT INTO registrations (student_id, event_id) VALUES (?, ?)");
+        mysqli_stmt_bind_param($stmt_insert, "ii", $student_id, $event_id);
+        mysqli_stmt_execute($stmt_insert);
+        mysqli_stmt_close($stmt_insert);
 
         // TODO: Add email sending here upon successful registration
 
