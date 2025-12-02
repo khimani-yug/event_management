@@ -29,6 +29,7 @@ $result = mysqli_query($conn, $sql);
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="main-content">
 <div class="header">
     <h2>Welcome Teacher, <?php echo htmlspecialchars($_SESSION['username']); ?></h2>
     <nav>
@@ -46,17 +47,17 @@ $result = mysqli_query($conn, $sql);
     <?php while ($row = mysqli_fetch_assoc($result)) { ?>
     <tr>
 
-        <td><?php echo htmlspecialchars($row['event_name']); ?></td>
-        <td><?php echo htmlspecialchars($row['event_date']); ?></td>
-        <td><?php echo htmlspecialchars($row['type_name']); ?></td>
-        <td><?php echo htmlspecialchars($row['teacher_name']); ?></td>
-        <td><?php echo $row['participant_count']; ?></td>
-        <td><?php echo $row['participant_limit']; ?></td>
-        <td><a href="event_participants.php?event_id=<?php echo $row['id']; ?>">View Participants</a></td>
+        <td data-label="Name"><?php echo htmlspecialchars($row['event_name']); ?></td>
+        <td data-label="Date"><?php echo htmlspecialchars($row['event_date']); ?></td>
+        <td data-label="Type"><?php echo htmlspecialchars($row['type_name']); ?></td>
+        <td data-label="Teacher"><?php echo htmlspecialchars($row['teacher_name']); ?></td>
+        <td data-label="Participants"><?php echo $row['participant_count']; ?></td>
+        <td data-label="Limit"><?php echo $row['participant_limit']; ?></td>
+        <td data-label="Participants List"><a href="event_participants.php?event_id=<?php echo $row['id']; ?>">View Participants</a></td>
     </tr>
     <?php } ?>
 </table>
 
-
+</div>
 </body>
 </html>

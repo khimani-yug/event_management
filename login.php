@@ -46,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="main-content">
 <div class="header">
     <h2>Login to Event Management System</h2>
 </div>
@@ -57,6 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </form>
 
 <?php if (isset($error)) echo "<p class='error'>$error</p>"; ?>
-
+</div>
 </body>
 </html>

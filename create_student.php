@@ -10,7 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $sql = "INSERT INTO users (username,email, password, role) VALUES ('$username','$email', '$password', 'teacher')";
+    // FIX: Changed role from 'teacher' to 'student'
+    $sql = "INSERT INTO users (username,email, password, role) VALUES ('$username','$email', '$password', 'student')";
     if (mysqli_query($conn, $sql)) {
         $success = "Student created successfully.";
     } else {
@@ -26,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="main-content">
 <div class="header">
     <h2>Create Student</h2>
 </div>
@@ -38,5 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php if (isset($success)) echo "<p class='success'>$success</p>"; ?>
 <?php if (isset($error)) echo "<p class='error'>$error</p>"; ?>
 <a href="teacher_dashboard.php" class="footer-link">Back to Dashboard</a>
+</div>
 </body>
 </html>

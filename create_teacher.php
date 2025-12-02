@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="main-content">
 <div class="header">
     <h2>Create Teacher</h2>
 </div>
@@ -38,5 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php if (isset($success)) echo "<p class='success'>$success</p>"; ?>
 <?php if (isset($error)) echo "<p class='error'>$error</p>"; ?>
 <a href="admin_dashboard.php" class="footer-link">Back to Dashboard</a>
+</div>
 </body>
 </html>

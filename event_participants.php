@@ -27,15 +27,17 @@ $result = mysqli_query($conn, $sql);
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="main-content">
 <h2>Participants for Event: <?php echo htmlspecialchars($event_name); ?> (<?php echo htmlspecialchars($event_date); ?>)</h2>
 <table>
 <tr><th>Student Username</th></tr>
 <?php while($row = mysqli_fetch_assoc($result)) { ?>
 <tr>
-    <td><?php echo htmlspecialchars($row['username']); ?></td>
+    <td data-label="Username"><?php echo htmlspecialchars($row['username']); ?></td>
 </tr>
 <?php } ?>
 </table>
 <a href="manage_events.php" class="footer-link">Back to Events</a>
+</div>
 </body>
 </html>

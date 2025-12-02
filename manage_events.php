@@ -36,6 +36,7 @@ $types = mysqli_query($conn, "SELECT * FROM event_types");
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="main-content">
 <div class="header">
     <h2>Manage Your Events</h2>
 </div>
@@ -67,18 +68,19 @@ $types = mysqli_query($conn, "SELECT * FROM event_types");
     $countRow = mysqli_fetch_assoc($countResult);
 ?>
 <tr>
-    <td><?php echo $event['id']; ?></td>
-    <td><?php echo htmlspecialchars($event['event_name']); ?></td>
-    <td><?php echo htmlspecialchars($event['event_date']); ?></td>
-    <td><?php echo htmlspecialchars($event['type_name']); ?></td>
-    <td><?php echo htmlspecialchars($event['details']); ?></td>
-    <td><?php echo $event['participant_limit']; ?></td>
-    <td><?php echo $countRow['count']; ?></td>
-    <td><a href="event_participants.php?event_id=<?php echo $event_id; ?>">View Participants</a></td>
+    <td data-label="ID"><?php echo $event['id']; ?></td>
+    <td data-label="Name"><?php echo htmlspecialchars($event['event_name']); ?></td>
+    <td data-label="Date"><?php echo htmlspecialchars($event['event_date']); ?></td>
+    <td data-label="Type"><?php echo htmlspecialchars($event['type_name']); ?></td>
+    <td data-label="Details"><?php echo htmlspecialchars($event['details']); ?></td>
+    <td data-label="Limit"><?php echo $event['participant_limit']; ?></td>
+    <td data-label="Participants"><?php echo $countRow['count']; ?></td>
+    <td data-label="Actions"><a href="event_participants.php?event_id=<?php echo $event_id; ?>">View Participants</a></td>
 </tr>
 <?php } ?>
 </table>
 
 <a href="teacher_dashboard.php" class="footer-link">Back to Dashboard</a>
+</div>
 </body>
 </html>

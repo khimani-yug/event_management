@@ -1,118 +1,257 @@
-/* style.css */
+/* style.css - Improved UI/UX */
+
+/* --- 1. Global Setup and Variables (Easier Color Changes) --- */
+:root {
+    --primary-color: #2980b9; /* Deep Sky Blue (Main Accent) */
+    --primary-hover-color: #1f6391;
+    --background-color: #f5f8fa; /* Light background for the body */
+    --text-color: #333;
+    --heading-color: #2c3e50; /* Dark Slate Grey */
+    --success-color: #27ae60; /* Emerald Green */
+    --error-color: #c0392b; /* Pomegranate Red */
+    --border-color: #ddd;
+    --card-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Smoother, larger shadow */
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f8fa;
-    margin: 20px auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 20px 0; /* Adjusted padding for better centering */
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Central container for all main content */
+.main-content {
     max-width: 900px;
-    color: #333;
+    width: 100%;
+    margin: 0 20px;
 }
 
 h2, h3 {
-    color: #2c3e50;
+    color: var(--heading-color);
+    margin-top: 20px;
     margin-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 5px;
 }
 
+/* --- 2. Links and Navigation --- */
 a {
-    color: #2980b9;
+    color: var(--primary-color);
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 a:hover {
-    text-decoration: underline;
+    color: var(--primary-hover-color);
+    text-decoration: none;
+}
+
+.header {
+    padding: 15px;
+    margin-bottom: 30px;
+    border-bottom: 3px solid var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.header h2 {
+    margin: 0;
+    padding: 0;
+    border-bottom: none;
+}
+
+nav a {
+    margin-left: 15px;
+    font-weight: 600;
+    padding: 8px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+    background-color: #ecf0f1; /* Very light grey for hover background */
+    text-decoration: none;
+}
+
+.footer-link {
+    margin-top: 20px;
+    display: block;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* --- 3. Forms and Inputs --- */
+form {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 30px;
 }
 
 form input[type="text"],
 form input[type="password"],
 form input[type="number"],
 form input[type="file"],
+form input[type="date"],
 form select,
 form textarea {
-    padding: 8px;
-    margin: 6px 0 12px 0;
+    padding: 10px 12px;
+    margin: 8px 0 16px 0;
     width: 100%;
     box-sizing: border-box;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus, form select:focus, form textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(41, 128, 185, 0.5); /* Blue glow on focus */
+    outline: none;
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 100px;
 }
 
 form input[type="submit"],
 button {
-    background-color: #2980b9;
+    background-color: var(--primary-color);
     border: none;
-    padding: 10px 18px;
+    padding: 12px 25px;
     color: white;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 5px;
     font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 form input[type="submit"]:hover,
 button:hover {
-    background-color: #1f6391;
+    background-color: var(--primary-hover-color);
+    transform: translateY(-1px);
 }
 
+.filter-form {
+    margin-bottom: 30px;
+    padding: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.filter-form select {
+    flex-grow: 1;
+    margin: 0; 
+}
+
+.filter-form input[type="submit"] {
+    margin: 0;
+    padding: 10px 15px;
+    white-space: nowrap;
+}
+
+/* --- 4. Messages --- */
+.error, .success {
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 5px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.error {
+    color: var(--error-color);
+    background-color: #fceae9; 
+    border: 1px solid var(--error-color);
+}
+
+.success {
+    color: var(--success-color);
+    background-color: #e6f7ee; 
+    border: 1px solid var(--success-color);
+}
+
+/* --- 5. Tables --- */
 table {
     border-collapse: collapse;
     width: 100%;
     margin: 15px 0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: var(--card-shadow);
     background: white;
-    border-radius: 5px;
+    border-radius: 8px;
     overflow: hidden;
 }
 
 table th, table td {
-    padding: 12px;
+    padding: 15px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--border-color);
 }
 
 table th {
-    background-color: #2980b9;
+    background-color: var(--primary-color);
     color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 14px;
 }
 
-.error {
-    color: #c0392b;
-    margin: 15px 0;
+/* Stripe rows for readability */
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
-.success {
-    color: #27ae60;
-    margin: 15px 0;
+table tr:hover {
+    background-color: #f1f1f1;
 }
 
-.header {
-    padding: 10px 0;
-    margin-bottom: 30px;
-    border-bottom: 2px solid #2980b9;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.footer-link {
-    margin-top: 15px;
-    display: block;
-}
-
+/* --- 6. Event Cards (Student Dashboard) --- */
 .event-card {
     display: flex;
-    align-items: flex-start;
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 1px 1px 5px #ccc;
-    border-radius: 5px;
+    align-items: flex-start; /* Aligns content to the top of the card */
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--card-shadow);
+    border-radius: 8px;
     background: white;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.event-card:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
 }
 
 .event-card img {
-    width: 150px;
-    height: 100px;
+    width: 180px; 
+    min-width: 180px;
+    height: 120px;
     object-fit: cover;
     margin-right: 20px;
-    border-radius: 5px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .event-details {
@@ -121,23 +260,101 @@ table th {
 
 .event-details h3 {
     margin-top: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 5px;
 }
 
-nav a {
-    margin-right: 15px;
+.event-details p {
+    margin: 5px 0;
+    line-height: 1.5;
 }
 
-.filter-form {
-    margin-bottom: 15px;
+.event-details strong {
+    color: var(--heading-color);
 }
 
-/* Responsive for smaller screens */
-@media (max-width: 600px) {
+/* --- 7. Responsive Overrides (Mobile) --- */
+@media (max-width: 950px) {
+    .main-content {
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 650px) {
+    body {
+        padding: 10px 0;
+    }
+    
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header nav {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .header nav a {
+        margin-left: 0;
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
+
     .event-card {
         flex-direction: column;
         align-items: center;
+        text-align: center;
     }
     .event-card img {
-        margin-bottom: 10px;
+        margin: 0 0 15px 0;
+        width: 100%;
+        height: auto;
+        max-height: 150px;
     }
+    
+    .filter-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-form input[type="submit"] {
+        width: 100%;
+    }
+
+    /* Table Mobile View (Hides column headers and stacks rows) */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    table tr {
+        border: 1px solid var(--border-color);
+        margin-bottom: 10px;
+        border-radius: 5px;
+        background-color: white !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    table td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    /*
+      **IMPORTANT FOR TABLES:**
+      To display proper labels on mobile for tables, you need to update your PHP files
+      to include a `data-label` attribute on each `<td>` element.
+      Example: `<td data-label="Event Name"><?php echo htmlspecialchars($row['event_name']); ?></td>`
+    */
 }

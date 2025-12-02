@@ -30,6 +30,7 @@ $event_types = mysqli_query($conn, "SELECT * FROM event_types");
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="main-content">
 <div class="header">
     <h2>Welcome Student, <?php echo htmlspecialchars($_SESSION['username']); ?></h2>
     <a href="logout.php">Logout</a>
@@ -93,5 +94,6 @@ $event_types = mysqli_query($conn, "SELECT * FROM event_types");
     </div>
 </div>
 <?php } ?>
+</div>
 </body>
 </html>

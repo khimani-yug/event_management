@@ -35,6 +35,7 @@ $result = mysqli_query($conn, "SELECT * FROM event_types");
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="main-content">
 <div class="header">
     <h2>Manage Event Types</h2>
 </div>
@@ -52,12 +53,13 @@ $result = mysqli_query($conn, "SELECT * FROM event_types");
 <tr><th>ID</th><th>Type</th><th>Image</th></tr>
 <?php while($row = mysqli_fetch_assoc($result)) { ?>
 <tr>
-    <td><?php echo $row['id']; ?></td>
-    <td><?php echo htmlspecialchars($row['type_name']); ?></td>
-    <td><img src="<?php echo htmlspecialchars($row['image']);?>" width="50" height="50" alt="Event Type Image"></td>
+    <td data-label="ID"><?php echo $row['id']; ?></td>
+    <td data-label="Type"><?php echo htmlspecialchars($row['type_name']); ?></td>
+    <td data-label="Image"><img src="<?php echo htmlspecialchars($row['image']);?>" width="50" height="50" alt="Event Type Image"></td>
 </tr>
 <?php } ?>
 </table>
 <a href="admin_dashboard.php" class="footer-link">Back to Dashboard</a>
+</div>
 </body>
 </html>
