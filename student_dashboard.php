@@ -64,7 +64,7 @@ $event_types = mysqli_query($conn, "SELECT * FROM event_types");
 
         <span class="search-divider"></span>
 
-        <button type="submit" class="search-btn">&#128269;</button>
+        <button type="submit" class="search-btn">Search</button>
     </form>
 
     <!-- Filter: separate form with its own button and dropdown -->

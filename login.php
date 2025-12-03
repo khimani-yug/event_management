@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body class="centered-form-page">
 <div class="main-content">
-    <h2>Login to Event Management System</h2>
+    <h2>Login to EventStack</h2>
 
 <form method="post" action="">
     <label for="username">Username:</label> <input type="text" id="username" name="username" required><br>
